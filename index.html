@@ -3,21 +3,48 @@
   <head>
     <meta charset="utf-8">
     <title>Shinhey</title>
-    <style media="screen">
-      body {
-        background-image: url("shinheyface.jpg");
-        background-size: 10%;
-        background-repeat: repeat;
-        text-align: center;
-      }
-      h1 {
-        color: white;
-        font: 10em arial, sans-serif;
-        text-shadow: 10px 10px 20px black;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
-    <h1>SHINHEY</h1>
+    <h1 class="title animation-element slide-down">SHINHEY</h1>
+
+
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+
+        var $animation_elements = $('.animation-element');
+        var $window = $(window);
+        $window.on('scroll resize', check_if_in_view);
+        $window.trigger('scroll');
+
+        function check_if_in_view() {
+          var window_height = $window.height();
+          var window_top_position = $window.scrollTop();
+          var window_bottom_position = (window_top_position + window_height);
+
+          $.each($animation_elements, function() {
+            var $element = $(this);
+            var element_height = $element.outerHeight();
+            var element_top_position = $element.offset().top;
+            var element_bottom_position = (element_top_position + element_height);
+
+            //check to see if this current container is within viewport
+            if ((element_bottom_position >= window_top_position) &&
+                (element_top_position <= window_bottom_position)) {
+              $element.addClass('in-view');
+            } else {
+              $element.removeClass('in-view');
+            }
+          });
+        }
+
+      });
+
+    </script>
+
+
+
   </body>
 </html>
